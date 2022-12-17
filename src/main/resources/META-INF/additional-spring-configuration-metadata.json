@@ -1,0 +1,9 @@
+{
+  "properties": [
+    {
+      "name": "application.bot.name.token",
+      "type": "java.lang.String",
+      "description": "Description for application.bot.name.token."
+    }
+  ]
+}

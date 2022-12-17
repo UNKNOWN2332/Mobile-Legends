@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.6.xsd">
+    <!--
+        Added the constraints for entity TelegramAccount.
+    -->
+    <changeSet id="20221217092614-2" author="jhipster">
+
+        <addForeignKeyConstraint baseColumnNames="info_paid_id"
+                                 baseTableName="telegram_account"
+                                 constraintName="fk_telegram_account__info_paid_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="info_paid"/>
+    </changeSet>
+</databaseChangeLog>

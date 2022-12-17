@@ -1,0 +1,46 @@
+{
+  "applications": "*",
+  "changelogDate": "20221217092616",
+  "clientRootFolder": "MobileLendsApp",
+  "databaseType": "sql",
+  "dto": "mapstruct",
+  "embedded": false,
+  "entityTableName": "turnirs",
+  "fields": [
+    {
+      "fieldName": "id",
+      "fieldType": "Long"
+    },
+    {
+      "fieldName": "turnirName",
+      "fieldType": "String",
+      "fieldValidateRules": ["maxlength", "minlength", "required"],
+      "fieldValidateRulesMaxlength": "15",
+      "fieldValidateRulesMinlength": "1"
+    },
+    {
+      "fieldName": "createrId",
+      "fieldType": "Long"
+    },
+    {
+      "fieldName": "startDate",
+      "fieldType": "Instant"
+    },
+    {
+      "fieldName": "endDate",
+      "fieldType": "Instant"
+    },
+    {
+      "fieldName": "price",
+      "fieldType": "Long"
+    }
+  ],
+  "fluentMethods": true,
+  "jpaMetamodelFiltering": false,
+  "microserviceName": "MobileLendsApp",
+  "name": "Turnirs",
+  "pagination": "pagination",
+  "readOnly": false,
+  "relationships": [],
+  "service": "serviceImpl"
+}

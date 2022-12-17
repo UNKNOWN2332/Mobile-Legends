@@ -1,0 +1,35 @@
+{
+  "applications": "*",
+  "changelogDate": "20221217092615",
+  "clientRootFolder": "MobileLendsApp",
+  "databaseType": "sql",
+  "dto": "mapstruct",
+  "embedded": false,
+  "entityTableName": "clans",
+  "fields": [
+    {
+      "fieldName": "id",
+      "fieldType": "Long"
+    },
+    {
+      "fieldName": "clanName",
+      "fieldType": "String",
+      "fieldValidateRules": ["maxlength", "minlength", "required"],
+      "fieldValidateRulesMaxlength": "15",
+      "fieldValidateRulesMinlength": "1"
+    },
+    {
+      "fieldName": "capitanId",
+      "fieldType": "Long",
+      "fieldValidateRules": ["required"]
+    }
+  ],
+  "fluentMethods": true,
+  "jpaMetamodelFiltering": false,
+  "microserviceName": "MobileLendsApp",
+  "name": "Clans",
+  "pagination": "pagination",
+  "readOnly": false,
+  "relationships": [],
+  "service": "serviceImpl"
+}

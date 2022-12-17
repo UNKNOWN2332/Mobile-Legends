@@ -1,0 +1,58 @@
+{
+  "applications": "*",
+  "changelogDate": "20221217092618",
+  "clientRootFolder": "MobileLendsApp",
+  "databaseType": "sql",
+  "dto": "mapstruct",
+  "embedded": false,
+  "entityTableName": "period",
+  "fields": [
+    {
+      "fieldName": "id",
+      "fieldType": "Long"
+    },
+    {
+      "fieldName": "periodName",
+      "fieldType": "String",
+      "fieldValidateRules": ["minlength", "maxlength"],
+      "fieldValidateRulesMaxlength": "25",
+      "fieldValidateRulesMinlength": "3"
+    },
+    {
+      "fieldName": "createAt",
+      "fieldType": "Instant"
+    },
+    {
+      "fieldName": "amount",
+      "fieldType": "Double",
+      "fieldValidateRules": ["min"],
+      "fieldValidateRulesMin": "0"
+    },
+    {
+      "fieldName": "datesOfPeriod",
+      "fieldType": "DatesOfPeriod",
+      "fieldValues": "Year,HalfYear,Month,HalfMonth,Week,Day"
+    }
+  ],
+  "fluentMethods": true,
+  "jpaMetamodelFiltering": false,
+  "microserviceName": "MobileLendsApp",
+  "name": "Period",
+  "pagination": "pagination",
+  "readOnly": false,
+  "relationships": [
+    {
+      "otherEntityName": "pay",
+      "otherEntityRelationshipName": "period",
+      "relationshipName": "pay",
+      "relationshipType": "one-to-many"
+    },
+    {
+      "otherEntityName": "infoPaid",
+      "otherEntityRelationshipName": "period",
+      "relationshipName": "infoPaid",
+      "relationshipType": "many-to-one"
+    }
+  ],
+  "service": "serviceImpl"
+}

@@ -1,0 +1,40 @@
+{
+  "applications": "*",
+  "changelogDate": "20221217092619",
+  "clientRootFolder": "MobileLendsApp",
+  "databaseType": "sql",
+  "dto": "mapstruct",
+  "embedded": false,
+  "entityTableName": "info_paid",
+  "fields": [
+    {
+      "fieldName": "id",
+      "fieldType": "Long"
+    },
+    {
+      "fieldName": "expiryDate",
+      "fieldType": "Instant"
+    }
+  ],
+  "fluentMethods": true,
+  "jpaMetamodelFiltering": false,
+  "microserviceName": "MobileLendsApp",
+  "name": "InfoPaid",
+  "pagination": "pagination",
+  "readOnly": false,
+  "relationships": [
+    {
+      "otherEntityName": "telegramAccount",
+      "otherEntityRelationshipName": "infoPaid",
+      "relationshipName": "account",
+      "relationshipType": "one-to-many"
+    },
+    {
+      "otherEntityName": "period",
+      "otherEntityRelationshipName": "infoPaid",
+      "relationshipName": "period",
+      "relationshipType": "one-to-many"
+    }
+  ],
+  "service": "serviceImpl"
+}

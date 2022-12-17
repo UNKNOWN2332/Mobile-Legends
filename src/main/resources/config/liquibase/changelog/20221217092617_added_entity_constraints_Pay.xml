@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.6.xsd">
+    <!--
+        Added the constraints for entity Pay.
+    -->
+    <changeSet id="20221217092617-2" author="jhipster">
+
+        <addForeignKeyConstraint baseColumnNames="account_id"
+                                 baseTableName="pay"
+                                 constraintName="fk_pay__account_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="telegram_account"/>
+
+        <addForeignKeyConstraint baseColumnNames="period_id"
+                                 baseTableName="pay"
+                                 constraintName="fk_pay__period_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="period"/>
+    </changeSet>
+</databaseChangeLog>

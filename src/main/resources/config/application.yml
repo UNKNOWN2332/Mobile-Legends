@@ -16,6 +16,7 @@
 
 ---
 # Conditionally disable springdoc on missing api-docs profile
+
 spring:
   config:
     activate:
@@ -246,4 +247,7 @@ jhipster:
 # https://www.jhipster.tech/common-application-properties/
 # ===================================================================
 
-# application:
+#  application:
+#    bot:
+#      name: MobileLegendsUzBot
+#      token: 5926225652:AAFBk8u7uWsvSetwfb6BtwPH2Ea1pR4xr9A

@@ -1,0 +1,54 @@
+{
+  "applications": "*",
+  "changelogDate": "20221217092617",
+  "clientRootFolder": "MobileLendsApp",
+  "databaseType": "sql",
+  "dto": "mapstruct",
+  "embedded": false,
+  "entityTableName": "pay",
+  "fields": [
+    {
+      "fieldName": "id",
+      "fieldType": "Long"
+    },
+    {
+      "fieldName": "amount",
+      "fieldType": "Double",
+      "fieldValidateRules": ["min"],
+      "fieldValidateRulesMin": "0"
+    },
+    {
+      "fieldName": "isPaid",
+      "fieldType": "Boolean"
+    },
+    {
+      "fieldName": "paidAt",
+      "fieldType": "Instant"
+    },
+    {
+      "fieldName": "expiryDate",
+      "fieldType": "Instant"
+    }
+  ],
+  "fluentMethods": true,
+  "jpaMetamodelFiltering": false,
+  "microserviceName": "MobileLendsApp",
+  "name": "Pay",
+  "pagination": "pagination",
+  "readOnly": false,
+  "relationships": [
+    {
+      "otherEntityName": "telegramAccount",
+      "otherEntityRelationshipName": "pay",
+      "relationshipName": "account",
+      "relationshipType": "many-to-one"
+    },
+    {
+      "otherEntityName": "period",
+      "otherEntityRelationshipName": "pay",
+      "relationshipName": "period",
+      "relationshipType": "many-to-one"
+    }
+  ],
+  "service": "serviceImpl"
+}
