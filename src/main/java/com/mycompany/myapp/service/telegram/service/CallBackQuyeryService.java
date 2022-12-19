@@ -1,37 +1,41 @@
 package com.mycompany.myapp.service.telegram.service;
 
 import com.mycompany.myapp.domain.TelegramAccount;
+import com.mycompany.myapp.domain.TelegramAccount_;
 import com.mycompany.myapp.domain.enumeration.Types;
 import com.mycompany.myapp.repository.TelegramAccountRepository;
-import com.mycompany.myapp.service.TelegramAccountService;
 import com.mycompany.myapp.service.dto.CodeMessage;
 import com.mycompany.myapp.service.dto.CodeMessageType;
 import com.mycompany.myapp.service.impl.TelegramAccountServiceImpl;
 import com.mycompany.myapp.service.mapper.TelegramAccountMapper;
 import java.util.Objects;
-import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.api.methods.updatingmessages.EditMessageText;
-import org.telegram.telegrambots.meta.api.objects.CallbackQuery;
 
 @Component
-@RequiredArgsConstructor
 public class CallBackQuyeryService {
 
-    @Autowired
     private TelegramAccountServiceImpl telegramAccountService;
 
-    @Autowired
     private TelegramAccountRepository telegramAccountRepository;
 
-    @Autowired
     private TelegramAccountMapper telegramAccountMapper;
 
-    public static CodeMessage callBackQuyery(String text, String chatId, Integer messageId) {
-        CallBackQuyeryService callBackQuyeryService = new CallBackQuyeryService();
+    public CallBackQuyeryService(
+        TelegramAccountServiceImpl telegramAccountService,
+        TelegramAccountRepository telegramAccountRepository,
+        TelegramAccountMapper telegramAccountMapper
+    ) {
+        this.telegramAccountService = telegramAccountService;
+        this.telegramAccountRepository = telegramAccountRepository;
+        this.telegramAccountMapper = telegramAccountMapper;
+    }
+
+    public CodeMessage callBackQuyery(String text, String chatId, Integer messageId) {
         CodeMessage codeMessage = new CodeMessage();
 
         SendMessage sendMessage = new SendMessage();
@@ -41,7 +45,7 @@ public class CallBackQuyeryService {
             String commands = text.split("/")[2];
             switch (commands) {
                 case "turnirs":
-                    codeMessage = callBackQuyeryService.createTurnirs(text, chatId, messageId);
+                    codeMessage = createTurnirs(text, chatId, messageId);
                     break;
                 case "registry":
                     sendMessage.setText("hello registry");
@@ -70,7 +74,11 @@ public class CallBackQuyeryService {
 
         editMessageText.setParseMode("Markdown");
         if (telegramAccount == null) {
-            if (Objects.equals(telegramAccount.getTypes(), null) || Objects.equals(telegramAccount.getTypes(), "FIRSTNAME")) {
+            telegramAccount = new TelegramAccount();
+            telegramAccount.setChatId(Long.valueOf(chatId));
+            telegramAccountRepository.save(telegramAccount);
+
+            if (telegramAccount.getTypes().equals("FIRSTNAME")) {
                 editMessageText.setText("Ismingizni kirting:");
                 codeMessage.setEditMessageText(editMessageText);
                 codeMessage.setType(CodeMessageType.EDIT);

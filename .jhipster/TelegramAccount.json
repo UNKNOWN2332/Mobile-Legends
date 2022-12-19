@@ -46,12 +46,11 @@
     {
       "fieldName": "mobileLegendId",
       "fieldType": "Long",
-      "fieldValidateRules": ["unique", "required"]
+      "fieldValidateRules": ["unique"]
     },
     {
       "fieldName": "nickName",
-      "fieldType": "String",
-      "fieldValidateRules": ["required"]
+      "fieldType": "String"
     },
     {
       "fieldName": "types",

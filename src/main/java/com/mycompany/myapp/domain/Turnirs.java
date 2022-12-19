@@ -1,7 +1,10 @@
 package com.mycompany.myapp.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import java.io.Serializable;
 import java.time.Instant;
+import java.util.HashSet;
+import java.util.Set;
 import javax.persistence.*;
 import javax.validation.constraints.*;
 import org.hibernate.annotations.Cache;
@@ -39,6 +42,11 @@ public class Turnirs implements Serializable {
 
     @Column(name = "price")
     private Long price;
+
+    @OneToMany(mappedBy = "turnirs")
+    @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
+    @JsonIgnoreProperties(value = { "turnirs" }, allowSetters = true)
+    private Set<Clans> clans = new HashSet<>();
 
     // jhipster-needle-entity-add-field - JHipster will add fields here
 
@@ -118,6 +126,37 @@ public class Turnirs implements Serializable {
 
     public void setPrice(Long price) {
         this.price = price;
+    }
+
+    public Set<Clans> getClans() {
+        return this.clans;
+    }
+
+    public void setClans(Set<Clans> clans) {
+        if (this.clans != null) {
+            this.clans.forEach(i -> i.setTurnirs(null));
+        }
+        if (clans != null) {
+            clans.forEach(i -> i.setTurnirs(this));
+        }
+        this.clans = clans;
+    }
+
+    public Turnirs clans(Set<Clans> clans) {
+        this.setClans(clans);
+        return this;
+    }
+
+    public Turnirs addClans(Clans clans) {
+        this.clans.add(clans);
+        clans.setTurnirs(this);
+        return this;
+    }
+
+    public Turnirs removeClans(Clans clans) {
+        this.clans.remove(clans);
+        clans.setTurnirs(null);
+        return this;
     }
 
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here

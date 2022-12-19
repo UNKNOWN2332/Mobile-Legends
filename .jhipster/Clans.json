@@ -30,6 +30,13 @@
   "name": "Clans",
   "pagination": "pagination",
   "readOnly": false,
-  "relationships": [],
+  "relationships": [
+    {
+      "otherEntityName": "turnirs",
+      "otherEntityRelationshipName": "clans",
+      "relationshipName": "turnirs",
+      "relationshipType": "many-to-one"
+    }
+  ],
   "service": "serviceImpl"
 }

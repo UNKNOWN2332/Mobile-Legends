@@ -50,12 +50,10 @@ public class TelegramAccount implements Serializable {
     @Column(name = "create_at")
     private Instant createAt;
 
-    @NotNull
-    @Column(name = "mobile_legend_id", nullable = false, unique = true)
+    @Column(name = "mobile_legend_id", unique = true)
     private Long mobileLegendId;
 
-    @NotNull
-    @Column(name = "nick_name", nullable = false)
+    @Column(name = "nick_name")
     private String nickName;
 
     @Enumerated(EnumType.STRING)

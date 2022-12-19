@@ -1,5 +1,6 @@
 package com.mycompany.myapp.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import java.io.Serializable;
 import javax.persistence.*;
 import javax.validation.constraints.*;
@@ -30,6 +31,10 @@ public class Clans implements Serializable {
     @NotNull
     @Column(name = "capitan_id", nullable = false)
     private Long capitanId;
+
+    @ManyToOne
+    @JsonIgnoreProperties(value = { "clans" }, allowSetters = true)
+    private Turnirs turnirs;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here
 
@@ -70,6 +75,19 @@ public class Clans implements Serializable {
 
     public void setCapitanId(Long capitanId) {
         this.capitanId = capitanId;
+    }
+
+    public Turnirs getTurnirs() {
+        return this.turnirs;
+    }
+
+    public void setTurnirs(Turnirs turnirs) {
+        this.turnirs = turnirs;
+    }
+
+    public Clans turnirs(Turnirs turnirs) {
+        this.setTurnirs(turnirs);
+        return this;
     }
 
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here

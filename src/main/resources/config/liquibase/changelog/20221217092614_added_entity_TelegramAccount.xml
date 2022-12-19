@@ -36,10 +36,10 @@
                 <constraints nullable="true" />
             </column>
             <column name="mobile_legend_id" type="bigint">
-                <constraints nullable="false" unique="true" uniqueConstraintName="ux_telegram_account__mobile_legend_id" />
+                <constraints nullable="true" unique="true" uniqueConstraintName="ux_telegram_account__mobile_legend_id" />
             </column>
             <column name="nick_name" type="varchar(255)">
-                <constraints nullable="false" />
+                <constraints nullable="true" />
             </column>
             <column name="types" type="varchar(255)">
                 <constraints nullable="true" />

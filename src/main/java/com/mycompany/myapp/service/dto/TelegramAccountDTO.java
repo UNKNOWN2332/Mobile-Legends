@@ -28,10 +28,8 @@ public class TelegramAccountDTO implements Serializable {
 
     private Instant createAt;
 
-    @NotNull
     private Long mobileLegendId;
 
-    @NotNull
     private String nickName;
 
     private Types types;

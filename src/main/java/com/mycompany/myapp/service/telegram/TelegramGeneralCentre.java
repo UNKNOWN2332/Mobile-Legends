@@ -21,10 +21,10 @@ public class TelegramGeneralCentre extends TelegramLongPollingBot {
 
     private MessageControl messageControl;
     private CallBackQuyeryService callBackQuyeryService;
-    private InlineButtonUtil inlineButtonUtil;
 
-    public TelegramGeneralCentre(MessageControl messageControl) {
+    public TelegramGeneralCentre(MessageControl messageControl, CallBackQuyeryService callBackQuyeryService) {
         this.messageControl = messageControl;
+        this.callBackQuyeryService = callBackQuyeryService;
     }
 
     @Override
@@ -46,7 +46,7 @@ public class TelegramGeneralCentre extends TelegramLongPollingBot {
             User user = callbackQuery.getFrom();
             message = callbackQuery.getMessage();
 
-            sendMsg(callBackQuyery(callbackQuery.getData(), String.valueOf(message.getChatId()), message.getMessageId()));
+            sendMsg(callBackQuyeryService.callBackQuyery(data, String.valueOf(message.getChatId()), message.getMessageId()));
         } else if (message != null) {
             if (message.isCommand()) {
                 sendMsg(messageControl.messageControl(message.getText(), message.getChatId(), message.getMessageId()));

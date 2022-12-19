@@ -41,6 +41,13 @@
   "name": "Turnirs",
   "pagination": "pagination",
   "readOnly": false,
-  "relationships": [],
+  "relationships": [
+    {
+      "otherEntityName": "clans",
+      "otherEntityRelationshipName": "turnirs",
+      "relationshipName": "clans",
+      "relationshipType": "one-to-many"
+    }
+  ],
   "service": "serviceImpl"
 }

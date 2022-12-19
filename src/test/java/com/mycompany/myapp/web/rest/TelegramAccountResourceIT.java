@@ -190,52 +190,6 @@ class TelegramAccountResourceIT {
 
     @Test
     @Transactional
-    void checkMobileLegendIdIsRequired() throws Exception {
-        int databaseSizeBeforeTest = telegramAccountRepository.findAll().size();
-        // set the field null
-        telegramAccount.setMobileLegendId(null);
-
-        // Create the TelegramAccount, which fails.
-        TelegramAccountDTO telegramAccountDTO = telegramAccountMapper.toDto(telegramAccount);
-
-        restTelegramAccountMockMvc
-            .perform(
-                post(ENTITY_API_URL)
-                    .with(csrf())
-                    .contentType(MediaType.APPLICATION_JSON)
-                    .content(TestUtil.convertObjectToJsonBytes(telegramAccountDTO))
-            )
-            .andExpect(status().isBadRequest());
-
-        List<TelegramAccount> telegramAccountList = telegramAccountRepository.findAll();
-        assertThat(telegramAccountList).hasSize(databaseSizeBeforeTest);
-    }
-
-    @Test
-    @Transactional
-    void checkNickNameIsRequired() throws Exception {
-        int databaseSizeBeforeTest = telegramAccountRepository.findAll().size();
-        // set the field null
-        telegramAccount.setNickName(null);
-
-        // Create the TelegramAccount, which fails.
-        TelegramAccountDTO telegramAccountDTO = telegramAccountMapper.toDto(telegramAccount);
-
-        restTelegramAccountMockMvc
-            .perform(
-                post(ENTITY_API_URL)
-                    .with(csrf())
-                    .contentType(MediaType.APPLICATION_JSON)
-                    .content(TestUtil.convertObjectToJsonBytes(telegramAccountDTO))
-            )
-            .andExpect(status().isBadRequest());
-
-        List<TelegramAccount> telegramAccountList = telegramAccountRepository.findAll();
-        assertThat(telegramAccountList).hasSize(databaseSizeBeforeTest);
-    }
-
-    @Test
-    @Transactional
     void getAllTelegramAccounts() throws Exception {
         // Initialize the database
         telegramAccountRepository.saveAndFlush(telegramAccount);

@@ -26,6 +26,7 @@
     <include file="config/liquibase/changelog/20221217092615_added_entity_constraints_Clans.xml" relativeToChangelogFile="false"/>
     <include file="config/liquibase/changelog/20221217092617_added_entity_constraints_Pay.xml" relativeToChangelogFile="false"/>
     <include file="config/liquibase/changelog/20221217092618_added_entity_constraints_Period.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/add_default_type_telegram_account.xml" relativeToChangelogFile="false"/>
     <!-- jhipster-needle-liquibase-add-constraints-changelog - JHipster will add liquibase constraints changelogs here -->
     <!-- jhipster-needle-liquibase-add-incremental-changelog - JHipster will add incremental liquibase changelogs here -->
 </databaseChangeLog>

@@ -18,6 +18,8 @@ public class ClansDTO implements Serializable {
     @NotNull
     private Long capitanId;
 
+    private TurnirsDTO turnirs;
+
     public Long getId() {
         return id;
     }
@@ -40,6 +42,14 @@ public class ClansDTO implements Serializable {
 
     public void setCapitanId(Long capitanId) {
         this.capitanId = capitanId;
+    }
+
+    public TurnirsDTO getTurnirs() {
+        return turnirs;
+    }
+
+    public void setTurnirs(TurnirsDTO turnirs) {
+        this.turnirs = turnirs;
     }
 
     @Override
@@ -70,6 +80,7 @@ public class ClansDTO implements Serializable {
             "id=" + getId() +
             ", clanName='" + getClanName() + "'" +
             ", capitanId=" + getCapitanId() +
+            ", turnirs=" + getTurnirs() +
             "}";
     }
 }
