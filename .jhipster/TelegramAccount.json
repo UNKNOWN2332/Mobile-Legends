@@ -55,7 +55,7 @@
     {
       "fieldName": "types",
       "fieldType": "Types",
-      "fieldValues": "FIRSTNAME,LASTNAME,PHONENUMBER,MOBILELEGENDID,NICHNAME"
+      "fieldValues": "FIRSTNAME,LASTNAME,PHONENUMBER,MOBILELEGENDID,NICKNAME,END"
     }
   ],
   "fluentMethods": true,

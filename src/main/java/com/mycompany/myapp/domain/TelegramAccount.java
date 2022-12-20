@@ -9,7 +9,6 @@ import java.util.HashSet;
 import java.util.Set;
 import javax.persistence.*;
 import javax.validation.constraints.*;
-import net.bytebuddy.implementation.bind.annotation.Default;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
@@ -49,7 +48,7 @@ public class TelegramAccount implements Serializable {
     private Role role;
 
     @Column(name = "create_at")
-    private Instant createAt;
+    private Instant createAt = Instant.now();
 
     @Column(name = "mobile_legend_id", unique = true)
     private Long mobileLegendId;

@@ -9,4 +9,5 @@ public enum Types {
     PHONENUMBER,
     MOBILELEGENDID,
     NICHNAME,
+    END,
 }
