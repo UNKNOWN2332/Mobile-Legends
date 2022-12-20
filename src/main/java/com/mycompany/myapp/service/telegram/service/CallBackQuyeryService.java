@@ -43,77 +43,75 @@ public class CallBackQuyeryService {
 
         if (text.startsWith("/create/")) {
             String commands = text.split("/")[2];
+            TelegramAccount telegramAccount = telegramAccountRepository.findByChatId(Long.valueOf(chatId)).orElse(null);
+
             switch (commands) {
                 case "turnirs":
-                    codeMessage = createTurnirs(text, chatId, messageId);
+                    if (telegramAccount == null) {
+                        telegramAccount = new TelegramAccount();
+                        telegramAccount.setChatId(Long.valueOf(chatId));
+                        telegramAccountRepository.save(telegramAccount);
+                    }
+                    EditMessageText editMessageText = new EditMessageText();
+                    editMessageText.setChatId(chatId);
+                    editMessageText.setText("Ismingizni kirting:");
+                    editMessageText.setParseMode("Markdown");
+                    editMessageText.setMessageId(messageId);
+                    codeMessage.setEditMessageText(editMessageText);
+                    codeMessage.setType(CodeMessageType.EDIT);
                     break;
                 case "registry":
+                    if (telegramAccount == null) {
+                        telegramAccount = new TelegramAccount();
+                        telegramAccount.setChatId(Long.valueOf(chatId));
+                        telegramAccountRepository.save(telegramAccount);
+                    }
                     sendMessage.setText("hello registry");
                     sendMessage.setParseMode("Markdown");
                     codeMessage.setSendMessage(sendMessage);
-                    codeMessage.setType(CodeMessageType.MESSAGE);
                     break;
                 case "info":
                     sendMessage.setText("hello info");
                     sendMessage.setParseMode("Markdown");
                     codeMessage.setSendMessage(sendMessage);
-                    codeMessage.setType(CodeMessageType.MESSAGE);
                     break;
             }
         }
+
         return codeMessage;
     }
 
-    private CodeMessage createTurnirs(String text, String chatId, Integer messageId) {
-        TelegramAccount telegramAccount = telegramAccountRepository.findByChatId(Long.valueOf(chatId)).orElse(null);
-
+    public CodeMessage createTurnirs(String text, String chatId, Integer messageId, TelegramAccount telegramAccount) {
         CodeMessage codeMessage = new CodeMessage();
         EditMessageText editMessageText = new EditMessageText();
+
         editMessageText.setMessageId(messageId);
-        editMessageText.setChatId(chatId);
-
-        editMessageText.setParseMode("Markdown");
-        if (telegramAccount == null) {
-            telegramAccount = new TelegramAccount();
-            telegramAccount.setChatId(Long.valueOf(chatId));
-            telegramAccountRepository.save(telegramAccount);
-
-            if (telegramAccount.getTypes().equals("FIRSTNAME")) {
-                editMessageText.setText("Ismingizni kirting:");
-                codeMessage.setEditMessageText(editMessageText);
-                codeMessage.setType(CodeMessageType.EDIT);
-                telegramAccount.setTypes(Types.LASTNAME);
-                telegramAccount.setFirstname(text);
-                telegramAccountService.save(telegramAccountMapper.toDto(telegramAccount));
-            } else if (Objects.equals(telegramAccount.getTypes(), "LASTNAME")) {
-                editMessageText.setText("Ismingizni kirting:");
-                codeMessage.setEditMessageText(editMessageText);
-                codeMessage.setType(CodeMessageType.EDIT);
-                telegramAccount.setTypes(Types.PHONENUMBER);
-                telegramAccount.setLastname(text);
-                telegramAccountService.save(telegramAccountMapper.toDto(telegramAccount));
-            } else if (Objects.equals(telegramAccount.getTypes(), "PHONENUMBER")) {
-                editMessageText.setText("Ismingizni kirting:");
-                codeMessage.setEditMessageText(editMessageText);
-                codeMessage.setType(CodeMessageType.EDIT);
-                telegramAccount.setTypes(Types.MOBILELEGENDID);
-                telegramAccount.setMobileLegendId(Long.valueOf(text));
-                telegramAccountService.save(telegramAccountMapper.toDto(telegramAccount));
-            } else if (Objects.equals(telegramAccount.getTypes(), "MOBILELEGENDID")) {
-                editMessageText.setText("Ismingizni kirting:");
-                codeMessage.setEditMessageText(editMessageText);
-                codeMessage.setType(CodeMessageType.EDIT);
-                telegramAccount.setTypes(Types.NICHNAME);
-                telegramAccount.setFirstname(text);
-                telegramAccountService.save(telegramAccountMapper.toDto(telegramAccount));
-            } else if (Objects.equals(telegramAccount.getTypes(), "NICHNAME")) {
-                editMessageText.setText("Ismingizni kirting:");
-                codeMessage.setEditMessageText(editMessageText);
-                codeMessage.setType(CodeMessageType.EDIT);
-                telegramAccount.setFirstname(text);
-                telegramAccountService.save(telegramAccountMapper.toDto(telegramAccount));
-            }
+        if (telegramAccount.getTypes().equals(Types.FIRSTNAME)) {
+            telegramAccount.setTypes(Types.LASTNAME);
+            telegramAccount.setFirstname(text);
+            telegramAccountService.save(telegramAccountMapper.toDto(telegramAccount));
+        } else if (Objects.equals(telegramAccount.getTypes(), Types.LASTNAME)) {
+            editMessageText.setText("familyangizni kirting:");
+            telegramAccount.setTypes(Types.PHONENUMBER);
+            telegramAccount.setLastname(text);
+            telegramAccountService.save(telegramAccountMapper.toDto(telegramAccount));
+        } else if (Objects.equals(telegramAccount.getTypes(), Types.PHONENUMBER)) {
+            editMessageText.setText("Nomeringizni kirting:");
+            telegramAccount.setTypes(Types.MOBILELEGENDID);
+            telegramAccount.setMobileLegendId(Long.valueOf(text));
+            telegramAccountService.save(telegramAccountMapper.toDto(telegramAccount));
+        } else if (Objects.equals(telegramAccount.getTypes(), Types.MOBILELEGENDID)) {
+            editMessageText.setText("Mobile Legends id kirting:");
+            telegramAccount.setTypes(Types.NICHNAME);
+            telegramAccount.setFirstname(text);
+            telegramAccountService.save(telegramAccountMapper.toDto(telegramAccount));
+        } else if (Objects.equals(telegramAccount.getTypes(), Types.NICHNAME)) {
+            editMessageText.setText("Nick nam kirting:");
+            telegramAccount.setFirstname(text);
+            telegramAccountService.save(telegramAccountMapper.toDto(telegramAccount));
         }
+        codeMessage.setEditMessageText(editMessageText);
+        codeMessage.setType(CodeMessageType.EDIT);
         return codeMessage;
     }
 }

@@ -9,6 +9,7 @@ import java.util.HashSet;
 import java.util.Set;
 import javax.persistence.*;
 import javax.validation.constraints.*;
+import net.bytebuddy.implementation.bind.annotation.Default;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
@@ -58,7 +59,7 @@ public class TelegramAccount implements Serializable {
 
     @Enumerated(EnumType.STRING)
     @Column(name = "types")
-    private Types types;
+    private Types types = Types.FIRSTNAME;
 
     @OneToMany(mappedBy = "account")
     @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)

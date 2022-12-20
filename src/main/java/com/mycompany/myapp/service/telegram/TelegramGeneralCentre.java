@@ -3,6 +3,8 @@ package com.mycompany.myapp.service.telegram;
 import static com.mycompany.myapp.service.telegram.service.CallBackQuyeryService.*;
 
 import com.mycompany.myapp.config.ApplicationProperties;
+import com.mycompany.myapp.domain.TelegramAccount;
+import com.mycompany.myapp.repository.TelegramAccountRepository;
 import com.mycompany.myapp.service.dto.CodeMessage;
 import com.mycompany.myapp.service.telegram.service.CallBackQuyeryService;
 import com.mycompany.myapp.service.telegram.service.InlineButtonUtil;
@@ -21,10 +23,16 @@ public class TelegramGeneralCentre extends TelegramLongPollingBot {
 
     private MessageControl messageControl;
     private CallBackQuyeryService callBackQuyeryService;
+    private TelegramAccountRepository telegramAccountRepository;
 
-    public TelegramGeneralCentre(MessageControl messageControl, CallBackQuyeryService callBackQuyeryService) {
+    public TelegramGeneralCentre(
+        MessageControl messageControl,
+        CallBackQuyeryService callBackQuyeryService,
+        TelegramAccountRepository telegramAccountRepository
+    ) {
         this.messageControl = messageControl;
         this.callBackQuyeryService = callBackQuyeryService;
+        this.telegramAccountRepository = telegramAccountRepository;
     }
 
     @Override
@@ -40,6 +48,7 @@ public class TelegramGeneralCentre extends TelegramLongPollingBot {
     @Override
     public void onUpdateReceived(Update update) {
         Message message = update.getMessage();
+
         if (update.hasCallbackQuery()) {
             CallbackQuery callbackQuery = update.getCallbackQuery();
             String data = callbackQuery.getData();
@@ -48,8 +57,30 @@ public class TelegramGeneralCentre extends TelegramLongPollingBot {
 
             sendMsg(callBackQuyeryService.callBackQuyery(data, String.valueOf(message.getChatId()), message.getMessageId()));
         } else if (message != null) {
-            if (message.isCommand()) {
-                sendMsg(messageControl.messageControl(message.getText(), message.getChatId(), message.getMessageId()));
+            var telegramAccount = telegramAccountRepository.findByChatId(message.getChatId());
+            String text = message.getText();
+            SendMessage sendMessage = new SendMessage();
+            sendMessage.setChatId(String.valueOf(message.getChatId()));
+            Integer messageId = message.getMessageId();
+
+            if (text != null) {
+                if (text.equals("/start") || text.equals("/about") || text.equals("/turnir") || text.equals("/help")) {
+                    sendMsg(messageControl.messageControl(message.getText(), message.getChatId(), message.getMessageId()));
+                } else if (telegramAccount.isPresent()) {
+                    sendMsg(
+                        callBackQuyeryService.createTurnirs(
+                            text,
+                            String.valueOf(message.getChatId()),
+                            message.getMessageId(),
+                            telegramAccount.get()
+                        )
+                    );
+                } else {
+                    sendMessage.setText(
+                        "Uzur bu kamandani bilmiman.\n\n Iltimos qaytadan murojat qiling /start orqali yoki @Shukrullaev_47 ga murojat qiling"
+                    );
+                    sendMsg(sendMessage);
+                }
             }
         }
     }

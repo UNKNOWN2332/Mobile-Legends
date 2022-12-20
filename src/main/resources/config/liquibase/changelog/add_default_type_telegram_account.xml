@@ -11,5 +11,6 @@
     -->
     <changeSet id="add_default_type_telegram_account.xml" author="Abdulloh">
     <addDefaultValue tableName="telegram_account" columnName="types" defaultValue="FIRSTNAME"/>
+        <addNotNullConstraint tableName="telegram_account" columnName="types" defaultNullValue="FIRSTNAME"/>
 </changeSet>
 </databaseChangeLog>
